@@ -7,9 +7,11 @@ public class Car : MonoBehaviour
 {
     [SerializeField] private float _startSpeed = 10f;
     [SerializeField] private float _acceleration = 0.2f;
+    [SerializeField] private float _turnSpeed = 200f;
     
-    private float _currentSpeed;
     private bool _hasCrashed = false;
+    private float _currentSpeed;
+    private int _steerValue;
     
 
     private void Start()
@@ -27,7 +29,17 @@ public class Car : MonoBehaviour
         // Check if car has crashed
         _currentSpeed = _hasCrashed ? _startSpeed : _currentSpeed += (_acceleration * Time.deltaTime);
         
+        // Turn Car
+        transform.Rotate(Vector3.up *(_steerValue * _turnSpeed * Time.deltaTime));
+        // Steer();
+        
         // Move Car forward
         transform.Translate(Vector3.forward * (Time.deltaTime * _currentSpeed));
+    }
+
+    public void Steer(int value)
+    {
+        _steerValue = value;
+        // transform.Rotate(Vector3.up * ( _steerValue* _turnSpeed * Time.deltaTime));
     }
 }
